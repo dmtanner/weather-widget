@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+$(document).ready(function(){
+		    $("#postButton").click(function(){
+				var myobj = {Name:$("#Name").val(),Comment:$("#Comment").val()};
+				jobj = JSON.stringify(myobj);
+				$("#json").text(jobj);
+				
+	        	var url = "http://greenhouseglobe.com/comment";
+				$.post(url,jobj,function(data,textStatus) {
+					$("#done").append(textStatus);
+				});
+	
+		  		$.getJSON(url,function(data) {
+						var everything;
+						everything = "<ul>";
+						$.each(data, function(i,item) {
+							everything += "<li> Name: "+data[i].Name+" Comment: "+data[i].Comment;
+						});
+						everything += "</ul>";
+						$("#currentComments").html(everything);
+			    });
+			 });
+});
+</script>
+</head>
+<body>
+
+<form id="commentForm" action="">
+  Name: <input type="text" id="Name" value="Name"><br>
+  comment: <input type="text" id="Comment" value="Comment"><br>
+</form>
+
+<button id="postButton">Post Comment</button>
+
+<div id="currentComments"></div>
+
+</body>
+</html>
+

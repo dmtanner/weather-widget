@@ -1,0 +1,11 @@
+{
+	"author":"Marcus Tanner",
+	"name":"weather-widget",
+	"version":"0.1.0",
+	"description":"a simple utah-city, weather querying app",
+	"repository": {
+		"type":"git",
+		"url":"https://github.com/dmtanner/weather-widget"
+	},
+	"dependencies":{}
+}
