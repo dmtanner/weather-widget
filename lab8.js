@@ -21,7 +21,7 @@ http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
 
 app.get('/', function (req, res) {
-	res.send("Get Index");
+	res.send("Home Page");
 });
 app.get('/getcity', function(req, res) {
 	
@@ -30,7 +30,7 @@ app.get('/getcity', function(req, res) {
 		fs.readFile("cities.dat.txt", function (err, data) {
 			if(err) {
 				console.log("Error");
-				res.writeHead(200);
+				res.writeHead(400);
 				res.end(JSON.stringify(err));
 			}	
 
@@ -55,15 +55,16 @@ app.get('/getcity', function(req, res) {
 app.use(bodyParser());
 
 app.get('/comment', function(req, res) {
-
+		console.log("in get comment");
 		// Return database entries in a json array
+		try{
 		var MongoClient = require('mongodb').MongoClient;
 		MongoClient.connect("mongodb://localhost/weather", function(err, db) {
-			if(err)	throw err;
+			if(err)	{console.log(err); throw err;}
 			db.collection('comments', function(err, comments) {
-				if(err) throw err;
+				if(err) {console.log(err); throw err;}
 				comments.find(function(err, items) {
-					if(err) throw err;
+					if(err) {console.log(err); throw err;}
 					items.toArray(function(err, itemArray) {
 						console.log("Comment Array Sending");
 						
@@ -74,10 +75,15 @@ app.get('/comment', function(req, res) {
 				})
 			})
 		})
+		}
+		catch(err) {
+			res.writeHead(400);
+			res.end("Error: " + err);
+		}
 });
 
 app.post('/comment', auth, function(req, res) {
-	
+	console.log("in post comment");
 	jsonData = "";
 	req.on('data', function (chunk) {
 		jsonData += chunk;
@@ -111,5 +117,5 @@ app.post('/comment', auth, function(req, res) {
 	
 });
 
-app.use('/', express.static('./html', {maxAge: 60*60*1000}));
+app.use('/', express.static('./html', {maxAge: 60*60*1}));
 

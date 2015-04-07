@@ -93,7 +93,7 @@ $(document).ready(function(){
 				var jobj = JSON.stringify(myobj);
 				$("#json").text(jobj);
 				
-	        	var url = "http://greenhouseglobe.com/comment";
+	        	var url = "https://greenhouseglobe.com/comment";
 				
 				jQuery.ajax({
 						url: url,
@@ -110,7 +110,7 @@ $(document).ready(function(){
 
 			//See Comments Code
 			$("#seeButton").click(function() {
-				var url = "http://greenhouseglobe.com/comment";
+				var url = "https://greenhouseglobe.com/comment";
 		  		$.getJSON(url,function(data) {
 						var everything;
 						everything = "<ul>";
